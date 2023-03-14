@@ -115,6 +115,8 @@ def buy_card_view(request, prod_num=0):
 
 
 # KG: What stops an attacker from making me buy a card for him?
+# adding protection tag to prevent CSRF vulnerability.
+@csrf_protect
 def gift_card_view(request, prod_num=0):
     context = {"prod_num": prod_num}
     if request.method == "GET":
