@@ -194,7 +194,8 @@ def use_card_view(request):
         # check if we know about card.
         # KG: Where is this data coming from? RAW SQL usage with unkown
         # KG: data seems dangerous.
-        signature = json.loads(card_data)['records'][0]['signature']
+        # Wrapping variable in brackets to prevent the use of special characters. 
+        [signature] = json.loads(card_data)['records'][0]['signature']
         # signatures should be pretty unique, right?
         card_query = Card.objects.raw('select id from LegacySite_card where data = \'%s\'' % signature)
         user_cards = Card.objects.raw(
