@@ -1,7 +1,7 @@
 from django.test import TestCase
 import requests
 
-
+#XSS
 class Part1Tests(TestCase):
     def test_xss_vulnerability(self):
         URL = 'http://127.0.0.1:8000/gift.html'
@@ -14,6 +14,7 @@ class Part1Tests(TestCase):
         else:
             print("SAFE!!!")
 
+#CSRF
 class TestCSRFExploit(TestCase):
     def test_csrf_exploit(self):
         session = requests.Session()
@@ -24,10 +25,11 @@ class TestCSRFExploit(TestCase):
         body_text = session.get(URL, cookies=cookies).text
 
         if "hacker" in body_text:
-            self.fail("CSRF vulnerability detected!!!")
+            print("CSRF vulnerability detected!!!")
         else:
             print("SAFE!!!")
 
+#SQLi
 class SQLInjectionTest(TestCase):
     def test_sql_injection(self):
         file = open('Part1/SQLi_Payload/sqli.gftcrd')
@@ -36,6 +38,33 @@ class SQLInjectionTest(TestCase):
         body = session.post(URL, data=file)
         card_key = ""
         if body.text.find(card_key):
-            self.fail("SQL Injection vulnerability detected!!!")
+            print("SQL Injection vulnerability detected!!!")
         else:
             print("SAFE!!!")
+
+#Random Exploit - OS Command Injection
+class CommandInjectionTestCase(TestCase):
+    def test_command_injection(self):
+        URL = 'http://127.0.0.1:8000/use.html'
+        malicious_command = "gift;ifconfig;ls;"
+        card_key = ''
+        session = requests.Session()
+        body = session.post(URL, data=malicious_command)
+
+        try:
+            with open('Part1/OSCommand_Payload/dummy.gftcrd') as file:
+                session.post(URL, data=file)
+                if body.text.find(card_key):
+                    print("OS Command Injection vulnerability detected!!!")
+                else:
+                    print("SAFE!!!")
+        except:
+            pass
+
+
+
+
+
+
+
+

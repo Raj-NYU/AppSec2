@@ -56,7 +56,7 @@ def parse_card_data(card_file_data, card_path_name):
     # KG: Are you sure you want the user to control that input?
     # Adding an if statement to fix the OS Command Injection so that contents can't be outputted.
     if ";" not in card_path_name:
-    ret_val = system(f"./{CARD_PARSER} 2 {card_path_name} > tmp_file")
+        ret_val = system(f"./{CARD_PARSER} 2 {card_path_name} > tmp_file")
     if ret_val != 0:
         return card_file_data
     with open("tmp_file", 'r') as tmp_file:
