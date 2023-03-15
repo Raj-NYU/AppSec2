@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import base64
-# Importing decouple/config method to organize the settings.py without having to redeploy the application everytime a variable is changed. 
-import decouple import config
+# Importing decouple/config method to organize the settings.py without having to redeploy the application everytime a variable is changed.
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,12 +27,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True 
-# Retrieve configuration parameters 
+# DEBUG = True
+# Retrieve configuration parameters
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
-breakpoint()
 
 # Application definition
 
