@@ -19,24 +19,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.7
-      uses: actions/setup-python@v2
+    - uses: actions/checkout@v3
+    - name: Set up ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
       with:
-        python-version: 3.7
+        python-version: ${{ matrix.python-version }}
     - name: Install dependencies
+    env:
+        DJANGO_ALLOWED_HOSTS: localhost 127.0.0.1:8000
+        DEBUG_MODE: True
+    run: |
+      python -m pip install --upgrade pip
+      pip install django
+      pip install django-cryptography
+      pip install requests
+      pip install python-decouple
+      pip install virtualenv
+      
+    - name: Configure Environment
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    - name: Lint with flake8
-      run: |
-        pip install flake8
-        flake8
-    - name: Coverage report
-      run: |
-        pip install coverage
-        coverage run manage.py test
-        coverage report
+        virtualenv env
+        python manage.py makemigrations LegacySite
+        python manage.py makemigrations
+        python manage.py migrate
+
     - name: Django Testing
       run: |
         python3 manage.py test
