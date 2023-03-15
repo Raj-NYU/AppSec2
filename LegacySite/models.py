@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.backends import BaseBackend
+# Encrypt library used to encrypt data
+from django_cryptography.fields import encrypt
 from . import extras
 
 # Create your models here.
@@ -30,16 +32,18 @@ class OurBackend(BaseBackend):
 
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
-    product_name = models.CharField(max_length=50, unique=True)
-    product_image_path = models.CharField(max_length=100, unique=True)
-    recommended_price = models.IntegerField()
-    description = models.CharField(max_length=250)
+    # Adding the encrypt function to encrypt sensitive data.
+    product_name = encrypt(models.CharField(max_length=50, unique=True))
+    product_image_path = encrypt(models.CharField(max_length=100, unique=True))
+    recommended_price = encrypt(models.IntegerField())
+    description = encrypt(models.CharField(max_length=250))
 
 class Card(models.Model):
     id = models.AutoField(primary_key=True)
-    data = models.BinaryField(unique=True)
+    # Adding the encrypt function to encrypt sensitive data.
+    data = encrypt(models.BinaryField(unique=True))
     product = models.ForeignKey('LegacySite.Product', on_delete=models.CASCADE, default=None)
-    amount = models.IntegerField()
-    fp = models.CharField(max_length=100, unique=True)
+    amount = encrypt(models.IntegerField())
+    fp = encrypt(models.CharField(max_length=100, unique=True))
     user = models.ForeignKey('LegacySite.User', on_delete=models.CASCADE)
     used = models.BooleanField(default=False)
