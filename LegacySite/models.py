@@ -29,7 +29,7 @@ class OurBackend(BaseBackend):
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             return None
-
+# Encrypting database with Django Encryption library.
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
     # Adding the encrypt function to encrypt sensitive data..
