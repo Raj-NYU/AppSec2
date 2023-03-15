@@ -1,0 +1,13 @@
+Database Encryption:
+To implement encryption in the database, I utilized the Django Cryptography library. First, I installed the library and then added the following code to my models.py file: "from django_cryptography.fields import encrypt". Next, I applied the encrypt() function to all sensitive information in the models.py file, encrypting the information to enhance security. The documentation that I referred to for this implementation included:
+- https://pypi.org/project/django-cryptography/
+- https://django-cryptography.readthedocs.io/en/latest/examples.html
+
+Key Management:
+Web applications rely on specific parameters to function correctly, such as the secret key and debug status, which are typically located in the settings.py file. However, having these values exposed in the settings.py file can pose a vulnerability since they need to remain secret and hidden from attackers. To address this issue, I used the python decouple library to separate setting parameters from the source code.
+I created an environment file called .env in the repository's root directory to store secret keys and other environment-specific parameters. This approach allows for easy movement of the codebase between environments without any need to update the code.
+After installing the python-decouple library, I imported config from the decouple library and utilized the config() function to retrieve configuration parameters that were to be stored in the .env file instead of the codebase. By doing so, I removed plaintext secret keys from the codebase and implemented config('SECRET_KEY') to reference the keys from the .env file whenever needed, making it more secure. 
+The documentation I used for key management is:
+- https://pypi.org/project/python-decouple/
+
+Managing keys in this way is recommended since storing secret keys directly in the settings.py file can limit flexibility, portability, and version control. Using a .env file, on the other hand, offers an additional layer of security and more flexibility for managing secrets. This approach also enables easy portability between environments and excludes secrets from version control.
