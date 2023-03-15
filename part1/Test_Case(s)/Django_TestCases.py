@@ -32,7 +32,7 @@ class TestCSRFExploit(TestCase):
 #SQLi
 class SQLInjectionTest(TestCase):
     def test_sql_injection(self):
-        file = open('Part1/Attack_Cases/sqli.gftcrd')
+        file = open('part1/Attack_Cases/sqli.gftcrd')
         URL = 'http://127.0.0.1:8000/use.html'
         session = requests.Session()
         body = session.post(URL, data=file)
@@ -52,7 +52,7 @@ class CommandInjectionTestCase(TestCase):
         body = session.post(URL, data=malicious_command)
 
         try:
-            with open('Part1/Attack_Cases/dummy.gftcrd') as file:
+            with open('part1/Attack_Cases/dummy.gftcrd') as file:
                 session.post(URL, data=file)
                 if body.text.find(card_key):
                     print("OS Command Injection vulnerability detected!!!")
