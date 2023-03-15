@@ -32,7 +32,7 @@ class OurBackend(BaseBackend):
 
 class Product(models.Model):
     product_id = models.AutoField(primary_key=True)
-    # Adding the encrypt function to encrypt sensitive data.
+    # Adding the encrypt function to encrypt sensitive data..
     product_name = encrypt(models.CharField(max_length=50, unique=True))
     product_image_path = encrypt(models.CharField(max_length=100, unique=True))
     recommended_price = encrypt(models.IntegerField())
@@ -40,7 +40,7 @@ class Product(models.Model):
 
 class Card(models.Model):
     id = models.AutoField(primary_key=True)
-    # Adding the encrypt function to encrypt sensitive data.
+    # Adding the encrypt function to encrypt sensitive data..
     data = encrypt(models.BinaryField(unique=True))
     product = models.ForeignKey('LegacySite.Product', on_delete=models.CASCADE, default=None)
     amount = encrypt(models.IntegerField())
