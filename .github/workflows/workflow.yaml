@@ -1,6 +1,7 @@
-name: Push
+name: AppSec Assignment 2.1
 
 on: [push]
+
 jobs:
   check-bats-version:
     runs-on: ubuntu-latest
@@ -11,3 +12,37 @@ jobs:
           node-version: '14'
       - run: npm install -g bats
       - run: bats -v
+
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.9]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Dependency check
+        env: 
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DJANGO_ALLOWED_HOSTS: localhost 127.0.0.1:8000
+          DEBUG_MODE: True
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install django
+          pip install django-cryptography
+          pip install requests
+          pip install python-decouple
+          pip install virtualenv
+      - name: Creating Virtual Environment
+        run: |
+          virtualenv env
+          python3 GiftcardSite/manage.py makemigrations LegacySite
+          python3 GiftcardSite/manage.py makemigrations
+          python3 GiftcardSite/manage.py migrate
+          sh GiftcardSite/import_dbs.sh
+      - name: Running Django Test-Cases
+        run: python3 manage.py test
