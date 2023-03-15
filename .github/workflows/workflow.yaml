@@ -29,9 +29,9 @@ jobs:
     - name: init config - Configure migrations and make the local env for testing
       run: |
         virtualenv env
-        python3 GiftcardSite/manage.py makemigrations LegacySite
-        python3 GiftcardSite/manage.py makemigrations
-        python3 GiftcardSite/manage.py migrate
-        sh GiftcardSite/import_dbs.sh
+        python3 manage.py makemigrations LegacySite
+        python3 manage.py makemigrations
+        python3 manage.py migrate
+        sh import_dbs.sh
     - name: Django Test-Case
       run: python3 manage.py test
