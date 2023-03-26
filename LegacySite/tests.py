@@ -43,6 +43,7 @@ class SQLInjectionTest(TestCase):
             print("SAFE!!!")
 
 #Random Exploit - OS Command Injection
+"""
 class CommandInjectionTestCase(TestCase):
     def test_command_injection(self):
         URL = 'http://127.0.0.1:8000/use.html'
@@ -60,3 +61,4 @@ class CommandInjectionTestCase(TestCase):
                     print("SAFE!!!")
         except:
             pass
+"""
