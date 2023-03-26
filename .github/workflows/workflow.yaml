@@ -29,8 +29,8 @@ jobs:
     - name: Creating Environment
       run: |
         virtualenv env
-        python3 GiftcardSite/manage.py makemigrations LegacySite
-        python3 GiftcardSite/manage.py makemigrations
-        python3 GiftcardSite/manage.py migrate
+        python3 manage.py makemigrations LegacySite
+        python3 manage.py makemigrations
+        python3 manage.py migrate
     - name: Run Test
       run: python3 manage.py test
