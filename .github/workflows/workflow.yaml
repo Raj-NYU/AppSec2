@@ -33,4 +33,4 @@ jobs:
         python3 manage.py makemigrations
         python3 manage.py migrate
     - name: Run Test
-      run: python3 manage.py test
+      run: python manage.py test
