@@ -32,5 +32,6 @@ jobs:
         python3 manage.py makemigrations LegacySite
         python3 manage.py makemigrations
         python3 manage.py migrate
+        sh import_dbs.sh
     - name: Run Test
       run: python manage.py test
