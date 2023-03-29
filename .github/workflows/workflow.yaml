@@ -28,3 +28,5 @@ jobs:
         pip install virtualenv
     - name: Run Test
       run: python manage.py test
+      
+      
